@@ -2,6 +2,8 @@ const nameInput = document.getElementById("my-name-input");
 const myMessage = document.getElementById("my-message");
 const sendButton = document.getElementById("send-button");
 const chatBox = document.getElementById("chat");
+let username = localStorage.getItem('username');
+myMessage.disabled = !username;
 async function updateMessages() {
   // Fetch Messages
   const messages = await fetchMessages();
@@ -74,3 +76,16 @@ sendButton.addEventListener("click", function(sendButtonClickEvent) {
   sendMessages(sender,message);
   myMessage.value = "";
 });
+function saveUsername(username) {
+    localStorage.setItem('username', username);
+    myMessage.disabled = false;
+}
+if (username) {
+    nameInput.value = username;
+}
+else {
+    nameInput.value = '';
+}
+saveButton.addEventListener('click', function() {
+    saveUsername(nameInput.value);
+})
